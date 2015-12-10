@@ -4,12 +4,16 @@
 package com.acertainbookstore.client.workloads;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.acertainbookstore.business.CertainBookStore;
+import com.acertainbookstore.business.ImmutableStockBook;
+import com.acertainbookstore.business.StockBook;
 import com.acertainbookstore.client.BookStoreHTTPProxy;
 import com.acertainbookstore.client.StockManagerHTTPProxy;
 import com.acertainbookstore.interfaces.BookStore;
@@ -103,7 +107,13 @@ public class CertainWorkload {
 	public static void initializeBookStoreData(BookStore bookStore,
 			StockManager stockManager) throws BookStoreException {
 
-		// TODO: You should initialize data for your bookstore here
-
+		Set<StockBook> books = new HashSet<StockBook>();
+		for(int i=0; i<10; i++){
+			int copies = (int)Math.random()*20;
+			StockBook book = new ImmutableStockBook(500+i, "50 shades of NULL vol." + i,
+					"Hitlerik Smørhår", (float) 10, copies, 0, 0, 0, false);
+			books.add(book);
+		}
+		stockManager.addBooks(books);
 	}
 }

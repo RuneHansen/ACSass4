@@ -1,7 +1,9 @@
 package com.acertainbookstore.client.workloads;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import com.acertainbookstore.business.ImmutableStockBook;
 import com.acertainbookstore.business.StockBook;
 
 /**
@@ -9,6 +11,8 @@ import com.acertainbookstore.business.StockBook;
  * class
  */
 public class BookSetGenerator {
+	private int bookNum = 0;
+	private int isbn = 1337;
 
 	public BookSetGenerator() {
 		// TODO Auto-generated constructor stub
@@ -21,7 +25,18 @@ public class BookSetGenerator {
 	 * @return
 	 */
 	public Set<Integer> sampleFromSetOfISBNs(Set<Integer> isbns, int num) {
-		return null;
+		if(isbns == null || isbns.size() == 0){
+			return null;
+		}
+
+		Set<Integer> rand_isbns = new HashSet<Integer>();
+		Integer[] isbnsArr = (Integer[]) isbns.toArray();
+
+		for(int i=0; i<num; i++){
+			int idx = (int)Math.random()*isbns.size();
+			rand_isbns.add(isbnsArr[idx]);
+		}
+		return rand_isbns;
 	}
 
 	/**
@@ -31,7 +46,14 @@ public class BookSetGenerator {
 	 * @return
 	 */
 	public Set<StockBook> nextSetOfStockBooks(int num) {
-		return null;
+		Set<StockBook> books = new HashSet<StockBook>();
+		for(int i=0; i<num; i++){
+			int copies = (int)Math.random()*20;
+			StockBook book = new ImmutableStockBook(isbn + bookNum, "Introduction to Eduroam vol. " + bookNum,
+					"Hitlerik Smørhår", (float) 10, copies, 0, 0, 0, false);
+			books.add(book);
+		}
+		return books;
 	}
 
 }
