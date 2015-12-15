@@ -95,7 +95,21 @@ public class CertainWorkload {
 	 * @param workerRunResults
 	 */
 	public static void reportMetric(List<WorkerRunResult> workerRunResults) {
-		// TODO: You should aggregate metrics and output them for plotting here
+		int frqruns = 0;
+		long time = 0;
+		int suc1 = 0;
+		int suc2 = 0;
+		for(WorkerRunResult work : workerRunResults) {
+			nruns += work.getTotalRuns();
+			frqruns += work.getTotalFrequentBookStoreInteractionRuns();
+			time += work.getElapsedTimeInNanoSecs();
+			suc2 += work.getSuccessfulFrequentBookStoreInteractionRuns();
+			suc1 += work.getSuccessfulInteractions();
+		}
+		String s = "Total time: " + time + ", successrate: " +
+		           suc1 / nruns + ", frequent success: " +
+				   suc2 / frqruns + "\n";
+		System.out.println(s);
 	}
 
 	/**
