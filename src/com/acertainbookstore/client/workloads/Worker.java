@@ -108,18 +108,18 @@ public class Worker implements Callable<WorkerRunResult> {
 	private void runRareStockManagerInteraction() throws BookStoreException {
 		List<StockBook> LSB = configuration.getStockManager().getBooks();
 		
-		
 		Set<StockBook> SSB = configuration.getBookSetGenerator().nextSetOfStockBooks(
 				configuration.getNumBooksToAdd());
 		Set<StockBook> BTA = new HashSet<StockBook>();
-		for(StockBook book : LSB) {
-			if(!SSB.contains(book.getISBN())) {
+		for(StockBook book : SSB) {
+			if(!LSB.contains(book)) {
 				BTA.add(book);
 			}
 		}
-		
+
 		configuration.getStockManager().addBooks(BTA);
-		
+
+
 	}
 
 	/**
