@@ -11,6 +11,7 @@ public class WorkerRunResult {
 	private int totalRuns; // total number of interactions run 
 	private long elapsedTimeInNanoSecs; // total time taken to run all
 										// interactions
+	private long transactionTime;
 	private int successfulFrequentBookStoreInteractionRuns; // number of
 															// successful
 															// frequent book
@@ -22,13 +23,20 @@ public class WorkerRunResult {
 
 	public WorkerRunResult(int successfulInteractions, long elapsedTimeInNanoSecs,
 			int totalRuns, int successfulFrequentBookStoreInteractionRuns,
-			int totalFrequentBookStoreInteractionRuns) {
+			int totalFrequentBookStoreInteractionRuns,
+			long transactionTime) {
 		this.setSuccessfulInteractions(successfulInteractions);
 		this.setElapsedTimeInNanoSecs(elapsedTimeInNanoSecs);
 		this.setTotalRuns(totalRuns);
 		this.setSuccessfulFrequentBookStoreInteractionRuns(successfulFrequentBookStoreInteractionRuns);
 		this.setTotalFrequentBookStoreInteractionRuns(totalFrequentBookStoreInteractionRuns);
+		this.transactionTime = transactionTime;
 	}
+	
+	public long getTransactionTime() {
+		return transactionTime;
+	}
+
 
 	public int getTotalRuns() {
 		return totalRuns;

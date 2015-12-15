@@ -104,11 +104,11 @@ public class Worker implements Callable<WorkerRunResult> {
 		}
 		endTimeInNanoSecs = System.nanoTime();
 		timeForRunsInNanoSecs += (endTimeInNanoSecs - startTimeInNanoSecs);
-		System.out.println((double)timeForClientTransaction/timeForRunsInNanoSecs);
 		return new WorkerRunResult(successfulInteractions,
 				timeForRunsInNanoSecs, configuration.getNumActualRuns(),
 				numSuccessfulFrequentBookStoreInteraction,
-				numTotalFrequentBookStoreInteraction);
+				numTotalFrequentBookStoreInteraction,
+				timeForClientTransaction);
 	}
 
 	/**
