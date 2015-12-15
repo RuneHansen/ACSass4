@@ -134,7 +134,6 @@ public class Worker implements Callable<WorkerRunResult> {
 		
 		Set<BookCopy> SBC = new HashSet<BookCopy>();
 		LSB = LSB.subList(0, configuration.getNumBooksWithLeastCopies());
-		
 		for(StockBook book : LSB) {
 			BookCopy tmp = new BookCopy(book.getISBN(), configuration.getNumAddCopies());
 			SBC.add(tmp);
@@ -151,8 +150,8 @@ public class Worker implements Callable<WorkerRunResult> {
 		  }
 
 		  private int compare(float a, float b) {
-		    return a < b ? 1
-		         : a > b ? -1
+		    return a < b ? -1
+		         : a > b ? 1
 		         : 0;
 		  }
 	}
@@ -163,19 +162,27 @@ public class Worker implements Callable<WorkerRunResult> {
 	 * @throws BookStoreException
 	 */
 	private void runFrequentBookStoreInteraction() throws BookStoreException {
+
 		List<Book> LB = configuration.getBookStore().getEditorPicks(configuration.getNumEditorPicksToGet());
 		Set<Integer> SI = new HashSet<Integer>();
 		for(Book book : LB) {
 			SI.add(book.getISBN());
 		}
-		System.out.println("Set1: " + SI);
+		//System.out.println("Set1: " + SI);
 		SI = configuration.getBookSetGenerator().sampleFromSetOfISBNs(SI, configuration.getNumBooksToBuy());
 		Set<BookCopy> SBC = new HashSet<BookCopy>();
-		System.out.println("Set2: " + SI);
+		//System.out.println("Set2: " + SI);
 		for(Integer i : SI) {
 			SBC.add(new BookCopy(i, configuration.getNumBookCopiesToBuy()));
 		}
+		
 		configuration.getBookStore().buyBooks(SBC);
+
+		
+
+
+
+		//System.out.println("Jeg er done\n");
 	}
 
 }
