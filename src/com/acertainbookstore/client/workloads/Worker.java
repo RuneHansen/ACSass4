@@ -41,7 +41,8 @@ public class Worker implements Callable<WorkerRunResult> {
 	 * @param chooseInteraction
 	 * @return
 	 */
-	private boolean runInteraction(float chooseInteraction) {
+	private int runInteraction(float chooseInteraction) {
+		int ret = 0;
 		try {
 			if (chooseInteraction < configuration
 					.getPercentRareStockManagerInteraction()) {
@@ -53,11 +54,12 @@ public class Worker implements Callable<WorkerRunResult> {
 				numTotalFrequentBookStoreInteraction++;
 				runFrequentBookStoreInteraction();
 				numSuccessfulFrequentBookStoreInteraction++;
+				ret = 1;
 			}
 		} catch (BookStoreException ex) {
-			return false;
+			return 0;
 		}
-		return true;
+		return ret+2;
 	}
 
 	/**
@@ -70,7 +72,9 @@ public class Worker implements Callable<WorkerRunResult> {
 		long endTimeInNanoSecs = 0;
 		int successfulInteractions = 0;
 		long timeForRunsInNanoSecs = 0;
-
+		long startTransactionTimer = 0;
+		long endTransactionTimer = 0;
+		long timeForClientTransaction = 0;
 		Random rand = new Random();
 		float chooseInteraction;
 
@@ -88,11 +92,18 @@ public class Worker implements Callable<WorkerRunResult> {
 		startTimeInNanoSecs = System.nanoTime();
 		while (count++ <= configuration.getNumActualRuns()) {
 			chooseInteraction = rand.nextFloat() * 100f;
-			if (runInteraction(chooseInteraction)) {
+			startTransactionTimer = System.nanoTime();
+			int res = runInteraction(chooseInteraction);
+			endTransactionTimer = System.nanoTime();
+			if (res>0) {
 				successfulInteractions++;
+			}
+			if (res > 2){
+				timeForClientTransaction += endTransactionTimer - startTransactionTimer;
 			}
 		}
 		endTimeInNanoSecs = System.nanoTime();
+		System.out.println(timeForClientTransaction);
 		timeForRunsInNanoSecs += (endTimeInNanoSecs - startTimeInNanoSecs);
 		return new WorkerRunResult(successfulInteractions,
 				timeForRunsInNanoSecs, configuration.getNumActualRuns(),
