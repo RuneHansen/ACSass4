@@ -25,16 +25,17 @@ public class BookSetGenerator {
 	 * @return
 	 */
 	public Set<Integer> sampleFromSetOfISBNs(Set<Integer> isbns, int num) {
-		if(isbns == null || isbns.size() == 0){
+		if(isbns == null || isbns.size() == 0 || num == 0){
 			return null;
 		}
 
 		Set<Integer> rand_isbns = new HashSet<Integer>();
-		Integer[] isbnsArr = (Integer[]) isbns.toArray();
+		Integer a[] = new Integer[isbns.size()];
+		isbns.toArray(a);
 
 		for(int i=0; i<num; i++){
-			int idx = (int)Math.random()*isbns.size();
-			rand_isbns.add(isbnsArr[idx]);
+			int idx = (int)(Math.random()*isbns.size());
+			rand_isbns.add(a[idx]);
 		}
 		return rand_isbns;
 	}
@@ -49,8 +50,9 @@ public class BookSetGenerator {
 		Set<StockBook> books = new HashSet<StockBook>();
 		for(int i=0; i<num; i++){
 			int copies = (int)Math.random()*20;
+			boolean ep = copies > 10;
 			StockBook book = new ImmutableStockBook(isbn + bookNum, "Introduction to Eduroam vol. " + bookNum,
-					"Hitlerik Smørhår", (float) 10, copies, 0, 0, 0, false);
+					"Hitlerik Smørhår", (float) 10, copies, 0, 0, 0, ep);
 			books.add(book);
 		}
 		return books;
