@@ -49,8 +49,8 @@ public class BookSetGenerator {
 	public Set<StockBook> nextSetOfStockBooks(int num) {
 		Set<StockBook> books = new HashSet<StockBook>();
 		for(int i=0; i<num; i++){
-			int copies = (int)Math.random()*20;
-			boolean ep = copies > 10;
+			int copies = (int)Math.random()*20+20;
+			boolean ep = copies > 30;
 			StockBook book = new ImmutableStockBook(isbn + bookNum, "Introduction to Eduroam vol. " + bookNum,
 					"Hitlerik Smørhår", (float) 10, copies, 0, 0, 0, ep);
 			books.add(book);

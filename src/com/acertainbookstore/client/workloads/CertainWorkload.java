@@ -124,7 +124,7 @@ public class CertainWorkload {
 
 		Set<StockBook> books = new HashSet<StockBook>();
 		for(int i=0; i<10; i++){
-			int copies = (int)(Math.random()*20);
+			int copies = (int)(Math.random()*20+20);
 			StockBook book = new ImmutableStockBook(copies*2+i*500+1, "50 shades of NULL vol." + i,
 					"Hitlerik Smørhår", (float) 10, copies, 0, 0, 0, true);
 			books.add(book);
