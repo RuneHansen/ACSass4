@@ -100,8 +100,10 @@ public class CertainWorkload {
 		int suc1 = 0;
 		int suc2 = 0;
 		int nruns = 0;
+		long transtime = 0;
 		double throughput = 0.0;
 		for(WorkerRunResult work : workerRunResults) {
+			transtime = work.getTransactionTime();
 			nruns += work.getTotalRuns();
 			frqruns += work.getTotalFrequentBookStoreInteractionRuns();
 			time += work.getElapsedTimeInNanoSecs();
@@ -112,7 +114,7 @@ public class CertainWorkload {
 		String s = "Total time: " + time + ", successrate: " +
 		           suc1 / nruns + ", frequent success: " +
 				   suc2 / frqruns + ", throughput: " +
-		           throughput;
+		           throughput + ", distribution: " + ((double)transtime / time);
 		System.out.println(s);
 	}
 
