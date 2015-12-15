@@ -49,11 +49,12 @@ public class BookSetGenerator {
 	public Set<StockBook> nextSetOfStockBooks(int num) {
 		Set<StockBook> books = new HashSet<StockBook>();
 		for(int i=0; i<num; i++){
-			int copies = (int)Math.random()*20;
+			int copies = (int)(Math.random()*20);
 			boolean ep = copies > 10;
-			StockBook book = new ImmutableStockBook(isbn + bookNum, "Introduction to Eduroam vol. " + bookNum,
-					"Hitlerik Smørhår", (float) 10, copies, 0, 0, 0, ep);
+			StockBook book = new ImmutableStockBook((isbn*5851 + bookNum*6299), "Introduction to Eduroam vol. " + bookNum,
+					"Hitlerik Smørhår", (float) 10, copies+10, 0, 0, 0, ep);
 			books.add(book);
+			bookNum++;
 		}
 		return books;
 	}
