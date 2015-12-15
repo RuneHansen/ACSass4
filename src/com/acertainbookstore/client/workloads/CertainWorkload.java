@@ -99,6 +99,7 @@ public class CertainWorkload {
 		long time = 0;
 		int suc1 = 0;
 		int suc2 = 0;
+		int nruns = 0;
 		for(WorkerRunResult work : workerRunResults) {
 			nruns += work.getTotalRuns();
 			frqruns += work.getTotalFrequentBookStoreInteractionRuns();
