@@ -34,7 +34,7 @@ public class CertainWorkload {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		int numConcurrentWorkloadThreads = 10;
+		int numConcurrentWorkloadThreads = 500;
 		String serverAddress = "http://localhost:8081";
 		boolean localTest = true;
 		List<WorkerRunResult> workerRunResults = new ArrayList<WorkerRunResult>();
@@ -103,7 +103,7 @@ public class CertainWorkload {
 		long transtime = 0;
 		double throughput = 0.0;
 		for(WorkerRunResult work : workerRunResults) {
-			transtime = work.getTransactionTime();
+			transtime += work.getTransactionTime();
 			nruns += work.getTotalRuns();
 			frqruns += work.getTotalFrequentBookStoreInteractionRuns();
 			time += work.getElapsedTimeInNanoSecs();
@@ -112,7 +112,7 @@ public class CertainWorkload {
 			throughput += ((double) work.getSuccessfulFrequentBookStoreInteractionRuns() / work.getElapsedTimeInNanoSecs());
 		}
 		String s = "Total time: " + time + ", successrate: " +
-		           suc1 / nruns + ", frequent success: " +
+		           (double)suc1 / nruns + ", frequent success: " +
 				   suc2 / frqruns + ", throughput: " +
 		           throughput + ", distribution: " + ((double)transtime / time);
 		System.out.println(s);
