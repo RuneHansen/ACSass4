@@ -168,10 +168,12 @@ public class Worker implements Callable<WorkerRunResult> {
 		for(Book book : LB) {
 			SI.add(book.getISBN());
 		}
-		SI = configuration.getBookSetGenerator().sampleFromSetOfISBNs(SI, configuration.getNumBookCopiesToBuy());
+		System.out.println("Set1: " + SI);
+		SI = configuration.getBookSetGenerator().sampleFromSetOfISBNs(SI, configuration.getNumBooksToBuy());
 		Set<BookCopy> SBC = new HashSet<BookCopy>();
+		System.out.println("Set2: " + SI);
 		for(Integer i : SI) {
-			SBC.add(new BookCopy(i, configuration.getNumBooksToBuy()));
+			SBC.add(new BookCopy(i, configuration.getNumBookCopiesToBuy()));
 		}
 		configuration.getBookStore().buyBooks(SBC);
 	}
